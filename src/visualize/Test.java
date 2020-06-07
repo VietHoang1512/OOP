@@ -2,12 +2,7 @@ package visualize;
 
 import static visualize.utils.Config.*;
 
-import visualize.crawl.StockDataFrame;
-import visualize.utils.TimeSerie;
-
 import visualize.plot.Plot;
-
-import javafx.stage.Stage;
 
 public class Test {
 
@@ -17,16 +12,13 @@ public class Test {
 //		RegExp re = new RegExp();
 //		System.out.println(re.extractCode("nguadFVS.csv"));
 
-		TimeSerie ts = new TimeSerie("X18.csv");
-		ts.getData(3);
-
-//		Plot plot = new Plot();
-//		plot.getSerie("VNINDEX", 3);
-//		try {
-//			plot.start(new Stage());
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		
+//		TimeSerie ts = new TimeSerie("X18.csv");
+//		ts.getData(3);
+		try {
+			Plot.launch("AAA", " GD khớp lệnh (khối lượng)");
+		} catch (Exception e) {
+			System.out.println("Mã code không tồn tại hoặc thông tin cần truy xuất không tồn tại");
+			e.printStackTrace();
+		}
 	}
 }

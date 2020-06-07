@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,27 +31,26 @@ public class TimeSerie {
 		return exists;
 	}
 
-//	TODO get data by header instead of column index	
-	public void getData(int column) {
+	public void getData(String header) {
 		System.out.println("Đang kiểm tra trong cơ sở dữ liệu ...");
 		if (!checkExist()) {
 			System.out.println("Chưa có trong cơ sở dữ liệu. Bắt đầu tải về...");
 			RegExp re = new RegExp();
 			StockDataFrame data = new StockDataFrame(re.extractCode(fileName));
 			data.toDataBase();
-			getData(column);
+			getData(header);
 
 		} else {
 			System.out.println("Dữ liệu đã có sẵn");
-//          TODO: get header
-//          String header = 
-			try (CSVReader dataReader = new CSVReader(new FileReader(dataDir + fileName), ',', '\'', 1)) {
+			String[] headers;
+			try (CSVReader dataReader = new CSVReader(new FileReader(dataDir + fileName), ',', '\'', 0)) {
+				headers = dataReader.readNext();
 
+				int column = Arrays.asList(headers).indexOf(header);
 				String[] nextLine;
 				RegExp re = new RegExp();
 				while ((nextLine = dataReader.readNext()) != null) {
 					String time = nextLine[0];
-//	                System.out.println(nextLine[column]);
 					float figure = re.extractFirstNum(nextLine[column]);
 					addSample(time, figure);
 				}
@@ -59,6 +59,7 @@ public class TimeSerie {
 				e.printStackTrace();
 			}
 		}
+
 	}
 
 	public void addSample(String time, float figure) {
