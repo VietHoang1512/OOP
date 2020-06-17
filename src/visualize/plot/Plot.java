@@ -1,19 +1,16 @@
 package visualize.plot;
 
-import visualize.utils.RegExp;
-import visualize.utils.TimeSerie;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
+import visualize.utils.RegExp;
+import visualize.utils.TimeSerie;
 
 public class Plot extends Application {
 	public static TimeSerie ts;
@@ -26,13 +23,17 @@ public class Plot extends Application {
 	public static void launch(String code, String head) {
 		ts = new TimeSerie(code + ".csv");
 		header = head;
+		ts.getData(header);
+//		for (String h:ts.getHeader()) {
+//			System.out.println(h);
+//		}
+
 		Application.launch(Plot.class);
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		ts.getData(header);
 		stage.setTitle("Biểu đồ");
 
 		final NumberAxis yAxis = new NumberAxis(0, 5000000, 1);
@@ -59,6 +60,7 @@ public class Plot extends Application {
 		Scene scene = new Scene(lineChart, 1000, 800);
 		stage.setScene(scene);
 		stage.show();
+		stage.close();
 	}
 
 }

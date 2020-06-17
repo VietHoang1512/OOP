@@ -1,11 +1,14 @@
-# others's works
-**/HoanThienBTL
-**/Lay_du_lieu
-**/NhomDuLieu
+# test
 **/test
+
+#
+*/xml
+*/mf
+**/nbproject
 
 # data
 **/data
+**/CafeF
 
 # Compiled class file
 *.class

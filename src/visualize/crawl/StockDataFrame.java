@@ -1,19 +1,10 @@
 package visualize.crawl;
 
-import static visualize.utils.Config.*;
+import static visualize.utils.Config.dataDir;
 
-import java.io.FileWriter;
 import java.io.IOException;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import visualize.utils.DataFrame;
-import visualize.utils.RegExp;
-
-import java.util.*;
 
 public class StockDataFrame extends DataFrame {
 	public String stockCode;
@@ -38,5 +29,4 @@ public class StockDataFrame extends DataFrame {
 		this.getHeader();
 		this.toCSV(dataDir);
 	}
-
 }

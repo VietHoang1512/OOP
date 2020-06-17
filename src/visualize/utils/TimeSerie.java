@@ -3,6 +3,7 @@ package visualize.utils;
 import com.opencsv.CSVReader;
 
 import visualize.crawl.StockDataFrame;
+import visualize.plot.Plot;
 
 import static visualize.utils.Config.dataDir;
 
@@ -20,6 +21,7 @@ public class TimeSerie {
 	public List<Float> figures = new ArrayList<Float>();
 	public int length = 0;
 	public String fileName;
+	public String[] headers;
 
 	public TimeSerie(String name) {
 		fileName = name;
@@ -31,8 +33,13 @@ public class TimeSerie {
 		return exists;
 	}
 
+	public String getCode() {
+		return new RegExp().extractCode(fileName);
+	}
+
 	public void getData(String header) {
-		System.out.println("Đang kiểm tra trong cơ sở dữ liệu ...");
+
+		System.out.println("Đang kiểm tra" + fileName + " trong cơ sở dữ liệu ...");
 		if (!checkExist()) {
 			System.out.println("Chưa có trong cơ sở dữ liệu. Bắt đầu tải về...");
 			RegExp re = new RegExp();
@@ -42,10 +49,9 @@ public class TimeSerie {
 
 		} else {
 			System.out.println("Dữ liệu đã có sẵn");
-			String[] headers;
+
 			try (CSVReader dataReader = new CSVReader(new FileReader(dataDir + fileName), ',', '\'', 0)) {
 				headers = dataReader.readNext();
-
 				int column = Arrays.asList(headers).indexOf(header);
 				String[] nextLine;
 				RegExp re = new RegExp();
@@ -68,6 +74,10 @@ public class TimeSerie {
 		length++;
 	}
 
+	public String[] getHeader() {
+		return headers;
+	}
+
 	public List getTimes() {
 		return times;
 	}
@@ -78,5 +88,10 @@ public class TimeSerie {
 
 	public int getLength() {
 		return length;
+	}
+
+	@Override
+	public String toString() {
+		return this.getCode();
 	}
 }
